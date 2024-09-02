@@ -2,8 +2,8 @@ import express from 'express';
 import ImageKit from 'imagekit';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import Chat from '../BEaiChat/models/chat.js';
-import UserChats from '../BEaiChat/models/userChats.js';
+import Chat from './BEaiChat/models/chat.js';
+import UserChats from './BEaiChat/models/userChats.js';
 import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node';
 
 const port = process.env.PORT || 3001;
