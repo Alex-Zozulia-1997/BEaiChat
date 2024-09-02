@@ -27,13 +27,13 @@ const connect = async () => {
     console.error('Error connecting to MongoDB:', error.message);
   }
 };
-// app.use(
-//   cors({
-//     origin: 'http://localhost:5173',
-//     // origin: process.env.CLIENT_URL,
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    // origin: process.env.CLIENT_URL,
+    // credentials: true,
+  })
+);
 app.use(express.json());
 const imagekit = new ImageKit({
   urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
@@ -44,12 +44,7 @@ const imagekit = new ImageKit({
 app.get('/', (req, res) => {
   res.send('Hello');
 });
-// app.get('/api/test', ClerkExpressRequireAuth({}), (req, res) => {
-//   const userId = req.auth.userId;
-//   console.log('User ID:', userId);
-//   res.send('Hello');
-//   console.log('Success');
-// });
+
 app.get('/api/upload', (req, res) => {
   const result = imagekit.getAuthenticationParameters();
 
