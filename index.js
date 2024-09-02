@@ -109,7 +109,7 @@ app.post('/api/chats', ClerkExpressRequireAuth(), async (req, res) => {
   // res.status(200).send({ success: true }); // Send a response back to the client
 });
 // Getting LIST OF CHATS
-app.get('/api/userchats', ClerkExpressRequireAuth(), async (req, res) => {
+app.get('/api/userchats', async (req, res) => {
   const userId = req.auth.userId;
   try {
     const userChats = await UserChats.find({ userId: userId });
@@ -120,7 +120,7 @@ app.get('/api/userchats', ClerkExpressRequireAuth(), async (req, res) => {
   }
 });
 // GETTING A CHAT BY ID
-app.get('/api/chats/:id', ClerkExpressRequireAuth(), async (req, res) => {
+app.get('/api/chats/:id', async (req, res) => {
   const userId = req.auth.userId;
   try {
     const chat = await Chat.findOne({ _id: req.params.id, userId: userId });
