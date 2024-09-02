@@ -2,8 +2,8 @@ import express from 'express';
 import ImageKit from 'imagekit';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import Chat from './models/chat.js';
-import UserChats from './models/userChats.js';
+import Chat from '../BEaiChat/models/chat.js';
+import UserChats from '../BEaiChat/models/userChats.js';
 import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node';
 
 const port = process.env.PORT || 3001;
@@ -27,13 +27,13 @@ const connect = async () => {
     console.error('Error connecting to MongoDB:', error.message);
   }
 };
-app.use(
-  cors({
-    origin: 'http://localhost:5173',
-    // origin: process.env.CLIENT_URL,
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: 'http://localhost:5173',
+//     // origin: process.env.CLIENT_URL,
+//     credentials: true,
+//   })
+// );
 app.use(express.json());
 const imagekit = new ImageKit({
   urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
@@ -109,7 +109,7 @@ app.post('/api/chats', ClerkExpressRequireAuth(), async (req, res) => {
   // res.status(200).send({ success: true }); // Send a response back to the client
 });
 // Getting LIST OF CHATS
-app.get('/api/userchats', async (req, res) => {
+app.get('/api/userchats', ClerkExpressRequireAuth(), async (req, res) => {
   const userId = req.auth.userId;
   try {
     const userChats = await UserChats.find({ userId: userId });
@@ -120,7 +120,7 @@ app.get('/api/userchats', async (req, res) => {
   }
 });
 // GETTING A CHAT BY ID
-app.get('/api/chats/:id', async (req, res) => {
+app.get('/api/chats/:id', ClerkExpressRequireAuth(), async (req, res) => {
   const userId = req.auth.userId;
   try {
     const chat = await Chat.findOne({ _id: req.params.id, userId: userId });
