@@ -27,13 +27,19 @@ const connect = async () => {
     console.error('Error connecting to MongoDB:', error.message);
   }
 };
+// app.use(
+//   cors({
+//     origin: 'http://localhost:5173',
+//     // origin: process.env.CLIENT_URL,
+//     // credentials: true,
+//   })
+// );
 app.use(
   cors({
-    origin: 'http://localhost:5173',
-    // origin: process.env.CLIENT_URL,
-    // credentials: true,
+    origin: '*', // Allow all origins (for development purposes only)
   })
 );
+
 app.use(express.json());
 const imagekit = new ImageKit({
   urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
